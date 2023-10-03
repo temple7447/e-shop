@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurant Menu</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .menu-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        button {
+            padding: 5px 10px;
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Restaurant Menu</h1>
+    <div id="menu">
+        <div class="menu-item">
+            <span>Burger</span>
+            <button class="add-btn">Add</button>
+            <button class="remove-btn">Remove</button>
+            <span class="quantity">0</span>
+            <span class="price">$10.00</span>
+        </div>
+        <div class="menu-item">
+            <span>Pizza</span>
+            <button class="add-btn">Add</button>
+            <button class="remove-btn">Remove</button>
+            <span class="quantity">0</span>
+            <span class="price">$12.00</span>
+        </div>
+        <!-- Add more menu items as needed -->
+    </div>
+    <div>
+        <h2>Total Price: $<span id="total-price">0.00</span></h2>
+    </div>
+
+    <script>
+        const addButtons = document.querySelectorAll('.add-btn');
+        const removeButtons = document.querySelectorAll('.remove-btn');
+        const quantities = document.querySelectorAll('.quantity');
+        const prices = document.querySelectorAll('.price');
+        const totalPriceElement = document.getElementById('total-price');
+
+        let total = 0;
+
+        addButtons.forEach((button, index) => {
+            button.addEventListener('click', () => {
+                quantities[index].textContent++;
+                total += parseFloat(prices[index].textContent.slice(1));
+                updateTotalPrice();
+            });
+        });
+
+        removeButtons.forEach((button, index) => {
+            button.addEventListener('click', () => {
+                if (quantities[index].textContent > 0) {
+                    quantities[index].textContent--;
+                    total -= parseFloat(prices[index].textContent.slice(1));
+                    updateTotalPrice();
+                }
+            });
+        });
+
+        function updateTotalPrice() {
+            totalPriceElement.textContent = total.toFixed(2);
+        }
+    </script>
+</body>
+</html>
